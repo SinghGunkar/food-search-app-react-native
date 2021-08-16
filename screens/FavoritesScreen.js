@@ -5,6 +5,7 @@ const FavoritesScreen = ({ navigation, route }) => {
     return (
         <View style={styles.container}>
             <Text>Favorites Screen</Text>
+
             <Button
                 title="Go To Single Favorite"
                 onPress={() => navigation.navigate("FavoriteStack")}

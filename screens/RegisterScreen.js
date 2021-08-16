@@ -1,28 +1,15 @@
 import React from "react"
-import { View, Text, StyleSheet, Button } from "react-native"
+import { View } from "react-native"
+
+import SignUpForm from "../components/SignUpForm"
+import styles from "../styles/globalStyles"
 
 const RegisterScreen = props => {
-    const { navigation } = props
-
     return (
         <View style={styles.container}>
-            <Text>Register Screen</Text>
-            <Text>Already have an account?</Text>
-            <Button
-                title="Sign In"
-                onPress={() => navigation.navigate("Login")}
-            />
+            <SignUpForm />
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#e8f4f8"
-    }
-})
 
 export default RegisterScreen
