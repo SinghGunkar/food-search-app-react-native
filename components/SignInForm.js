@@ -1,17 +1,18 @@
 import React, { useState } from "react"
 import { View, StyleSheet } from "react-native"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { Text, Input, Button } from "react-native-elements"
 import * as RootNavigation from "../navigation/RootNavigation"
-import { loginUser } from "../redux/slices/authSlice"
+import { handleUserLogin } from "../redux/slices/authSlice"
+import { selectAuthState } from "../redux/slices/authSlice"
 
 const SignInForm = () => {
     // state for login form
     const [email, setEmail] = useState("testemail@emil.com")
     const [password, setPassword] = useState("Testtest")
-    const [errorMsg, setErrorMsg] = useState("")
 
     const dispatch = useDispatch()
+    const errorMsg = useSelector(selectAuthState).errorMessage
 
     return (
         <View style={styles.container}>
@@ -21,6 +22,7 @@ const SignInForm = () => {
                     placeholder="Email"
                     leftIcon={{ type: "font-awesome", name: "user" }}
                     onChangeText={value => setEmail(value)}
+                    errorMessage={errorMsg}
                 />
                 <Text h3>Password</Text>
                 <Input
@@ -28,20 +30,17 @@ const SignInForm = () => {
                     leftIcon={{ type: "font-awesome", name: "lock" }}
                     onChangeText={value => setPassword(value)}
                     secureTextEntry={true}
+                    errorMessage={errorMsg}
                 />
 
                 <Button
                     title="Login"
-                    onPress={() => console.log("handle login")}
-                />
-                <Button
-                    title="Test Login"
                     onPress={() =>
-                        dispatch(loginUser({ email, password }))
+                        dispatch(handleUserLogin({ email, password }))
                     }
                 />
             </View>
-            <Text style={styles.errorMessageStyle}>{errorMsg}</Text>
+
             <Text h6 style={styles.bottomTextStyle}>
                 Don't have an account?{" "}
                 <Text
@@ -68,12 +67,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         marginBottom: 10
     },
-    errorMessageStyle: {
-        textAlign: "center",
-        color: "red",
-        fontWeight: "300",
-        fontSize: 18
-    },
+
     registerLink: {
         color: "#3c6dcc"
     }

@@ -9,6 +9,12 @@ const authReducers = {
         reducer(state, action) {
             state.isUserLoggedIn = false
         }
+    },
+    setErrorMessage: {
+        reducer(state, action) {
+            state.errorMessage = action.payload
+            console.log(state.errorMessage)
+        }
     }
 }
 

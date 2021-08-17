@@ -8,7 +8,7 @@ const instance = axios.create({
 instance.interceptors.request.use(
     // before request is sent => add token to request headers
     async config => {
-        const token = await AsyncStorage.getItem("token")
+        const token = await AsyncStorage.getItem("food-search-token")
         if (token) {
             config.headers.Authorization = `Bearer ${token}`
         }
