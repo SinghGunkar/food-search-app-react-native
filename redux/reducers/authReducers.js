@@ -13,7 +13,6 @@ const authReducers = {
     setErrorMessage: {
         reducer(state, action) {
             state.errorMessage = action.payload
-            console.log(state.errorMessage)
         }
     }
 }

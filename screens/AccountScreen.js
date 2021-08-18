@@ -10,7 +10,9 @@ const AccountScreen = () => {
         <View style={styles.container}>
             <Button
                 title="Logout"
-                onPress={() => dispatch(logoutUser())}
+                onPress={() => {
+                    dispatch(logoutUser())
+                }}
             />
         </View>
     )

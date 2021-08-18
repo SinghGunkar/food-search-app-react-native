@@ -11,8 +11,13 @@ const favoritesSlice = createSlice({
 })
 
 // named action exports
-export const { setFavorites, setUserId, setEmail, setName } =
-    favoritesSlice.actions
+export const {
+    setFavorites,
+    setUserId,
+    setEmail,
+    setName,
+    clearFavoritesState
+} = favoritesSlice.actions
 
 /* 
 favorites state looks like 

@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import authReducers from "../reducers/authReducers"
 import databaseAPI from "../../APIs/database"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { clearFavoritesState } from "./favoritesSlice"
 
 const initialState = {
     isUserLoggedIn: false,
@@ -29,6 +30,7 @@ export const registerUser = createAsyncThunk(
                     "food-search-token",
                     response.data.token
                 )
+
                 thunkAPI.dispatch(loginUser())
                 thunkAPI.dispatch(setErrorMessage(""))
             }
@@ -52,6 +54,7 @@ export const handleUserLogout = createAsyncThunk(
         try {
             // remove token
             await AsyncStorage.removeItem("food-search-token")
+            thunkAPI.dispatch(clearFavoritesState())
             thunkAPI.dispatch(logoutUser)
             thunkAPI.dispatch(setErrorMessage(""))
         } catch (err) {

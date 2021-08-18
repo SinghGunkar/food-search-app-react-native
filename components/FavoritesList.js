@@ -1,20 +1,14 @@
 import React from "react"
 import { StyleSheet, FlatList } from "react-native"
-import { ListItem } from "react-native-elements"
 import { useSelector } from "react-redux"
 import { selectAllFavorites } from "../redux/slices/favoritesSlice"
+import FavoriteRow from "./FavoriteRow"
 
 const FavoritesList = () => {
     const favoritesArray = useSelector(selectAllFavorites)
 
     const renderItem = ({ item }) => {
-        return (
-            <ListItem bottomDivider>
-                <ListItem.Content>
-                    <ListItem.Title>{item.text}</ListItem.Title>
-                </ListItem.Content>
-            </ListItem>
-        )
+        return <FavoriteRow favorite={item} />
     }
     return (
         <FlatList

@@ -19,6 +19,11 @@ const favoritesReducers = {
         reducer(state, action) {
             state["username"] = action.payload
         }
+    },
+    clearFavoritesState: {
+        reducer(state, action) {
+            state = {}
+        }
     }
 }
 
