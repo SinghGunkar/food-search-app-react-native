@@ -89,7 +89,6 @@ export const handleUserLogin = createAsyncThunk(
     }
 )
 
-// Thunks
 export const getCurrentUserInfo = createAsyncThunk(
     "auth/getCurrentUserInfo",
     async (_, thunkAPI) => {

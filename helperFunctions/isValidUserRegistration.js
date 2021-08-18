@@ -42,7 +42,7 @@ const isValidUserRegistration = (userInfo, dispatch) => {
                 "Password must be at least 6 characters long"
             )
         )
-        false
+        return false
     }
 
     // no issues => clear error message
