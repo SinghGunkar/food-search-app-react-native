@@ -1,7 +1,7 @@
 import React from "react"
 import { View, StyleSheet, Button } from "react-native"
 import { useDispatch } from "react-redux"
-import { logoutUser } from "../redux/slices/authSlice"
+import { handleUserLogout } from "../redux/slices/authSlice"
 
 const AccountScreen = () => {
     const dispatch = useDispatch()
@@ -11,7 +11,7 @@ const AccountScreen = () => {
             <Button
                 title="Logout"
                 onPress={() => {
-                    dispatch(logoutUser())
+                    dispatch(handleUserLogout())
                 }}
             />
         </View>

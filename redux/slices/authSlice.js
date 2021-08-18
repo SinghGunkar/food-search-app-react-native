@@ -55,8 +55,8 @@ export const handleUserLogout = createAsyncThunk(
             // remove token
             await AsyncStorage.removeItem("food-search-token")
             thunkAPI.dispatch(clearFavoritesState())
-            thunkAPI.dispatch(logoutUser)
             thunkAPI.dispatch(setErrorMessage(""))
+            thunkAPI.dispatch(logoutUser())
         } catch (err) {
             const errMsg = `Issue when trying to logout user in authSlice.js\n${err.response.data.error}`
             thunkAPI.dispatch(setErrorMessage(errMsg))
@@ -109,6 +109,27 @@ export const getCurrentUserInfo = createAsyncThunk(
             console.log(err.response)
             const errMsg = `Something went wrong when fetching current user info`
             thunkAPI.dispatch(setErrorMessage(errMsg))
+        }
+    }
+)
+
+export const attemptAutoLocalSignIn = createAsyncThunk(
+    "auth/attemptAutoLocalSignIn",
+    async (_, thunkAPI) => {
+        try {
+            const token = await AsyncStorage.getItem(
+                "food-search-token"
+            )
+            console.log("token\n" + token)
+            if (token) {
+                thunkAPI.dispatch(loginUser())
+                console.log("Auto logged in user")
+            } else {
+                console.log("Could not auto log in user")
+            }
+        } catch (err) {
+            console.log("Error in attemptLocalSignIn.js \n")
+            console.log(err)
         }
     }
 )
