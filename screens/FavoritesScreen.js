@@ -1,10 +1,43 @@
-import React from "react"
-import { View, Text, StyleSheet, Button } from "react-native"
+import React, { useEffect } from "react"
+import { View, StyleSheet, Button } from "react-native"
+import FavoritesList from "../components/FavoritesList"
+import { getCurrentUserInfo } from "../redux/slices/authSlice"
+import { useDispatch, useSelector } from "react-redux"
+
+import {
+    setFavorites,
+    setUserId,
+    setEmail,
+    setName
+} from "../redux/slices/favoritesSlice"
 
 const FavoritesScreen = ({ navigation, route }) => {
+    const dispatch = useDispatch()
+    const currentUserInfo = dispatch(getCurrentUserInfo())
+
+    /* 
+    when favorites screen loads, fetch current info to render most up to date info
+    Note: 
+    unwrap "currentUserInfo" because "getCurrentUserInfo()" created by createAsyncThunk will always 
+    return a resolved promise with either the fulfilled action object or rejected object
+    */
+    currentUserInfo
+        .unwrap()
+        .then(currentUserData => {
+            const { email, _id, favorites, name } = currentUserData
+            // set state using reducers from slices/FavoritesSlice.js
+            dispatch(setEmail(email))
+            dispatch(setUserId(_id))
+            dispatch(setFavorites(favorites))
+            dispatch(setName(name))
+        })
+        .catch(error => {
+            console.log(error)
+        })
+
     return (
         <View style={styles.container}>
-            <Text>Favorites Screen</Text>
+            <FavoritesList />
 
             <Button
                 title="Go To Single Favorite"
@@ -17,8 +50,7 @@ const FavoritesScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: "center",
-        justifyContent: "center"
+        backgroundColor: "pink"
     }
 })
 

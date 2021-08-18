@@ -1,25 +1,35 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import databaseAPI from "../../APIs/database"
+import favoritesReducers from "../reducers/favoritesReducers"
 
-const initialState = [
-    { id: 1, favorite: "indian food" },
-    { id: 2, favorite: "bubble tea" },
-    { id: 3, favorite: "pizza" }
-]
+const initialState = {}
 
 const favoritesSlice = createSlice({
     name: "favorites",
     initialState: initialState,
-    reducers: {
-        addFavorites: {
-            reducer(state, action) {
-                state.favorites.push(action.payload)
-            }
-        }
-    }
+    reducers: favoritesReducers
 })
 
 // named action exports
-export const { addPost } = favoritesSlice.actions
+export const { setFavorites, setUserId, setEmail, setName } =
+    favoritesSlice.actions
+
+/* 
+favorites state looks like 
+    Object {
+        "email": "example@email.com",
+        "favoritesArray": Array [],
+        "userID": "342587jdhfkjhkj",
+        "username": "someUserName",
+    }
+*/
+
+// selectors
+export const selectUserEmail = state => state.favorites.email
+export const selectUserId = state => state.favorites.userID
+export const selectUsername = state => state.favorites.username
+export const selectAllFavorites = state =>
+    state.favorites.favoritesArray
 
 // export favorites reducer by default
 export default favoritesSlice.reducer

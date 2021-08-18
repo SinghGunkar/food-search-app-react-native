@@ -3,16 +3,19 @@ import { View, StyleSheet } from "react-native"
 import { Text, Input, Button } from "react-native-elements"
 import * as RootNavigation from "../navigation/RootNavigation"
 import isValidUserRegistration from "../helperFunctions/isValidUserRegistration"
-import { useDispatch } from "react-redux"
-import { registerUser } from "../redux/slices/authSlice"
+import { useDispatch, useSelector } from "react-redux"
+import {
+    registerUser,
+    selectAuthState,
+    setErrorMessage
+} from "../redux/slices/authSlice"
 
 const SignUpForm = () => {
     // state for login form
-    const [userName, setUsername] = useState("test123")
-    const [email, setEmail] = useState("test123@gmail.com")
+    const [userName, setUsername] = useState("test1234")
+    const [email, setEmail] = useState("test1234@gmail.com")
     const [password1, setPassword1] = useState("123456")
     const [password2, setPassword2] = useState("123456")
-    const [errorMsg, setErrorMsg] = useState("")
 
     const loginState = {
         userName,
@@ -23,6 +26,7 @@ const SignUpForm = () => {
     }
 
     const dispatch = useDispatch()
+    const errorMsg = useSelector(selectAuthState).errorMessage
 
     return (
         <View style={styles.container}>
@@ -62,7 +66,7 @@ const SignUpForm = () => {
                     onPress={() => {
                         const isValid = isValidUserRegistration(
                             loginState,
-                            setErrorMsg
+                            dispatch
                         )
                         if (isValid) {
                             dispatch(registerUser(loginState))
@@ -78,6 +82,7 @@ const SignUpForm = () => {
                     style={styles.loginLink}
                     onPress={() => {
                         RootNavigation.navigate("Login")
+                        dispatch(setErrorMessage(""))
                     }}
                 >
                     Login

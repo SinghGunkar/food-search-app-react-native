@@ -3,13 +3,16 @@ import { View, StyleSheet } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
 import { Text, Input, Button } from "react-native-elements"
 import * as RootNavigation from "../navigation/RootNavigation"
-import { handleUserLogin } from "../redux/slices/authSlice"
-import { selectAuthState } from "../redux/slices/authSlice"
+import {
+    handleUserLogin,
+    setErrorMessage,
+    selectAuthState
+} from "../redux/slices/authSlice"
 
 const SignInForm = () => {
     // state for login form
-    const [email, setEmail] = useState("testemail@emil.com")
-    const [password, setPassword] = useState("Testtest")
+    const [email, setEmail] = useState("test1234@gmail.com")
+    const [password, setPassword] = useState("1234567")
 
     const dispatch = useDispatch()
     const errorMsg = useSelector(selectAuthState).errorMessage
@@ -47,6 +50,7 @@ const SignInForm = () => {
                     style={styles.registerLink}
                     onPress={() => {
                         RootNavigation.navigate("Register")
+                        dispatch(setErrorMessage(""))
                     }}
                 >
                     Register

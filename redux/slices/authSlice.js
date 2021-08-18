@@ -5,9 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const initialState = {
     isUserLoggedIn: false,
-    token: null,
-    errorMessage: "",
-    token: ""
+    errorMessage: ""
 }
 
 // thunks
@@ -35,7 +33,14 @@ export const registerUser = createAsyncThunk(
                 thunkAPI.dispatch(setErrorMessage(""))
             }
         } catch (err) {
-            const errMsg = `Issue when trying to register user in authSlice.js\n${err.response.data.error}`
+            console.log(
+                "Issue when trying to register user in authSlice.js"
+            )
+            const errMsg =
+                `${err.response.data.error}` ===
+                "Duplicate field value entered"
+                    ? "Username or email is already taken"
+                    : "Registration failed"
             thunkAPI.dispatch(setErrorMessage(errMsg))
         }
     }
@@ -43,7 +48,7 @@ export const registerUser = createAsyncThunk(
 
 export const handleUserLogout = createAsyncThunk(
     "auth/logoutUser",
-    async (obj, thunkAPI) => {
+    async (_, thunkAPI) => {
         try {
             // remove token
             await AsyncStorage.removeItem("food-search-token")
@@ -79,6 +84,28 @@ export const handleUserLogin = createAsyncThunk(
             }
         } catch (err) {
             const errMsg = `${err.response.data.error}`
+            thunkAPI.dispatch(setErrorMessage(errMsg))
+        }
+    }
+)
+
+// Thunks
+export const getCurrentUserInfo = createAsyncThunk(
+    "auth/getCurrentUserInfo",
+    async (_, thunkAPI) => {
+        try {
+            const response = await databaseAPI.get(
+                "/FoodAPI/v1/auth/me",
+                { withCredentials: true }
+            )
+
+            // destructure out the needed data
+            const { _id, email, favorites, name } = response.data.data
+
+            return { _id, email, favorites, name }
+        } catch (err) {
+            console.log(err.response)
+            const errMsg = `Something went wrong when fetching current user info`
             thunkAPI.dispatch(setErrorMessage(errMsg))
         }
     }

@@ -1,15 +1,21 @@
-const isValidUserRegistration = (userInfo, setErrorMsg) => {
+import { setErrorMessage } from "../redux/slices/authSlice"
+
+const isValidUserRegistration = (userInfo, dispatch) => {
     const { userName, email, password1, password2 } = userInfo
 
     // if field is missing
     if (!userName || !email || !password1 || !password2) {
-        setErrorMsg("Please fill out all fields")
+        dispatch(setErrorMessage("Please fill out all fields"))
         return false
     }
 
     // username must be longer than 6 characters
     if (userName.length < 6) {
-        setErrorMsg("Username must be at least 6 characters long")
+        dispatch(
+            setErrorMessage(
+                "Username must be at least 6 characters long"
+            )
+        )
         return false
     }
 
@@ -19,24 +25,28 @@ const isValidUserRegistration = (userInfo, setErrorMsg) => {
     )
 
     if (!regex.test(email)) {
-        setErrorMsg("Invalid email format")
+        dispatch(setErrorMessage("Invalid email format"))
         return false
     }
 
     // password must be the same
     if (password1 != password2) {
-        setErrorMsg("Passwords are not equal")
+        dispatch(setErrorMessage("Passwords are not equal"))
         return false
     }
 
     // password must be at least 6 characters long
     if (password1.length < 6) {
-        setErrorMsg("Password must be at least 6 characters long")
+        dispatch(
+            setErrorMessage(
+                "Password must be at least 6 characters long"
+            )
+        )
         false
     }
 
     // no issues => clear error message
-    setErrorMsg("")
+    dispatch(setErrorMessage(""))
     return true
 }
 
