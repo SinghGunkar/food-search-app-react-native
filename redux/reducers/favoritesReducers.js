@@ -24,6 +24,12 @@ const favoritesReducers = {
         reducer(state, action) {
             state = {}
         }
+    },
+    addFavorite: {
+        reducer(state, action) {
+            state["favoritesArray"].push(action.payload)
+            console.log(state)
+        }
     }
 }
 

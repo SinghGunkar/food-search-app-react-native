@@ -1,14 +1,15 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { View, StyleSheet, Button } from "react-native"
 import FavoritesList from "../components/FavoritesList"
 import { getCurrentUserInfo } from "../redux/slices/authSlice"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 
 import {
     setFavorites,
     setUserId,
     setEmail,
-    setName
+    setName,
+    addFavorite
 } from "../redux/slices/favoritesSlice"
 
 const FavoritesScreen = ({ navigation, route }) => {
@@ -38,7 +39,17 @@ const FavoritesScreen = ({ navigation, route }) => {
     return (
         <View style={styles.container}>
             <FavoritesList />
-
+            <Button
+                title="Add Favorite"
+                onPress={() => {
+                    dispatch(
+                        addFavorite({
+                            _id: "611cf6190c8ebe37083b0a20",
+                            text: "test"
+                        })
+                    )
+                }}
+            />
             <Button
                 title="Go To Single Favorite"
                 onPress={() => navigation.navigate("FavoriteStack")}

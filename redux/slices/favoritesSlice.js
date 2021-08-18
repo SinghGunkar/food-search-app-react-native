@@ -4,12 +4,6 @@ import favoritesReducers from "../reducers/favoritesReducers"
 
 const initialState = {}
 
-const favoritesSlice = createSlice({
-    name: "favorites",
-    initialState: initialState,
-    reducers: favoritesReducers
-})
-
 export const onPressedDeleteFavorite = createAsyncThunk(
     "favorites/onPressedDeleteFavorite",
     async ({ userID, favoriteID }) => {
@@ -46,11 +40,19 @@ export const fetchFavorites = createAsyncThunk(
 
             return favorites
         } catch (err) {
+            console.log(
+                `Something went wrong when fetching favorites for user info`
+            )
             console.log(err.response)
-            const errMsg = `Something went wrong when fetching favorites for user info`
         }
     }
 )
+
+const favoritesSlice = createSlice({
+    name: "favorites",
+    initialState: initialState,
+    reducers: favoritesReducers
+})
 
 // named action exports
 export const {
@@ -58,7 +60,8 @@ export const {
     setUserId,
     setEmail,
     setName,
-    clearFavoritesState
+    clearFavoritesState,
+    addFavorite
 } = favoritesSlice.actions
 
 /* 

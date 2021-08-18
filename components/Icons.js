@@ -1,4 +1,4 @@
-import React, { useReducer } from "react"
+import React from "react"
 import { Icon } from "react-native-elements"
 import { useDispatch } from "react-redux"
 import {
@@ -24,8 +24,7 @@ const deleteIcon = ({ favoriteID, userID }) => {
                 dispatch(fetchFavorites())
                     .unwrap()
                     .then(currentFavoriteData => {
-                        setFavorites(currentFavoriteData)
-                        console.log(currentFavoriteData.length)
+                        dispatch(setFavorites(currentFavoriteData))
                     })
                     .catch(error => {
                         console.log(error)
