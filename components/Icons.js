@@ -1,26 +1,34 @@
 import React from "react"
 import { Icon } from "react-native-elements"
+import { useDispatch } from "react-redux"
+import { onPressedDeleteFavorite } from "../redux/slices/favoritesSlice"
 
-const deleteIcon = () => {
+const deleteIcon = ({ favoriteID, userID }) => {
+    const dispatch = useDispatch()
+
     return (
         <Icon
             name="trash"
             type="evilicon"
             color="black"
             size={30}
-            onPress={() => console.log("delete fav")}
+            onPress={() =>
+                dispatch(
+                    onPressedDeleteFavorite({ favoriteID, userID })
+                )
+            }
         />
     )
 }
 
-const editIcon = () => {
+const editIcon = ({ favoriteID, userID }) => {
     return (
         <Icon
             name="pencil"
             type="evilicon"
             color="black"
             size={30}
-            onPress={() => console.log("edit fav")}
+            onPress={() => console.log(favoriteID + userID)}
         />
     )
 }

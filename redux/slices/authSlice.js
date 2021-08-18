@@ -120,12 +120,9 @@ export const attemptAutoLocalSignIn = createAsyncThunk(
             const token = await AsyncStorage.getItem(
                 "food-search-token"
             )
-            console.log("token\n" + token)
+
             if (token) {
                 thunkAPI.dispatch(loginUser())
-                console.log("Auto logged in user")
-            } else {
-                console.log("Could not auto log in user")
             }
         } catch (err) {
             console.log("Error in attemptLocalSignIn.js \n")

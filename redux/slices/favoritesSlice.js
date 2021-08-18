@@ -10,6 +10,54 @@ const favoritesSlice = createSlice({
     reducers: favoritesReducers
 })
 
+export const onPressedDeleteFavorite = createAsyncThunk(
+    "favorites/onPressedDeleteFavorite",
+    async ({ userID, favoriteID }) => {
+        try {
+            await databaseAPI.delete(
+                "/FoodAPI/v1/user/deleteFavoriteForUser",
+                {
+                    data: {
+                        user_id: userID,
+                        fav_id: favoriteID
+                    }
+                }
+            )
+        } catch (err) {
+            console.log(
+                "Issue when trying to delete favorite for user in favoritesSlice.js\n"
+            )
+            console.log(err)
+        }
+    }
+)
+
+export const fetchFavoritesByUserId = createAsyncThunk(
+    "favorties/fetchFavoritesByUserId",
+    async ({ email }) => {
+        try {
+            const response = await databaseAPI.get(
+                "/FoodAPI/v1/user/getAllFavorites",
+                {
+                    email: email
+                }
+            )
+
+            if (response.state !== 200) {
+                console.log("Failed to fetch user favorites")
+            }
+
+            console.log(response.data)
+
+            return response.data
+        } catch (err) {
+            console.log(
+                "Issue when trying to fetch favorites for user in favoritesSlice.js\n"
+            )
+        }
+    }
+)
+
 // named action exports
 export const {
     setFavorites,
