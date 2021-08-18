@@ -32,28 +32,22 @@ export const onPressedDeleteFavorite = createAsyncThunk(
     }
 )
 
-export const fetchFavoritesByUserId = createAsyncThunk(
+export const fetchFavorites = createAsyncThunk(
     "favorties/fetchFavoritesByUserId",
-    async ({ email }) => {
+    async (_, thunkAPI) => {
         try {
             const response = await databaseAPI.get(
-                "/FoodAPI/v1/user/getAllFavorites",
-                {
-                    email: email
-                }
+                "/FoodAPI/v1/auth/me",
+                { withCredentials: true }
             )
 
-            if (response.state !== 200) {
-                console.log("Failed to fetch user favorites")
-            }
+            // destructure out the needed data
+            const { favorites } = response.data.data
 
-            console.log(response.data)
-
-            return response.data
+            return favorites
         } catch (err) {
-            console.log(
-                "Issue when trying to fetch favorites for user in favoritesSlice.js\n"
-            )
+            console.log(err.response)
+            const errMsg = `Something went wrong when fetching favorites for user info`
         }
     }
 )

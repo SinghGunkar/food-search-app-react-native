@@ -1,7 +1,11 @@
-import React from "react"
+import React, { useReducer } from "react"
 import { Icon } from "react-native-elements"
 import { useDispatch } from "react-redux"
-import { onPressedDeleteFavorite } from "../redux/slices/favoritesSlice"
+import {
+    onPressedDeleteFavorite,
+    fetchFavorites,
+    setFavorites
+} from "../redux/slices/favoritesSlice"
 
 const deleteIcon = ({ favoriteID, userID }) => {
     const dispatch = useDispatch()
@@ -12,11 +16,21 @@ const deleteIcon = ({ favoriteID, userID }) => {
             type="evilicon"
             color="black"
             size={30}
-            onPress={() =>
+            onPress={() => {
                 dispatch(
                     onPressedDeleteFavorite({ favoriteID, userID })
                 )
-            }
+
+                dispatch(fetchFavorites())
+                    .unwrap()
+                    .then(currentFavoriteData => {
+                        setFavorites(currentFavoriteData)
+                        console.log(currentFavoriteData.length)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            }}
         />
     )
 }

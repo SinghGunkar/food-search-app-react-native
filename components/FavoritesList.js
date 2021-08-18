@@ -1,11 +1,12 @@
 import React from "react"
 import { StyleSheet, FlatList } from "react-native"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { selectAllFavorites } from "../redux/slices/favoritesSlice"
 import FavoriteRow from "./FavoriteRow"
 
 const FavoritesList = () => {
     const favoritesArray = useSelector(selectAllFavorites)
+    const dispatch = useDispatch()
 
     const renderItem = ({ item }) => {
         return <FavoriteRow favorite={item} />
