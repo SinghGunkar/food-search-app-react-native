@@ -1,6 +1,7 @@
 import React from "react"
 import { ListItem } from "react-native-elements"
-import { deleteIcon, editIcon } from "./Icons"
+import deleteIcon from "./DeleteButton"
+import editIcon from "./EditButton"
 import { selectUserId } from "../redux/slices/favoritesSlice"
 import { useSelector } from "react-redux"
 

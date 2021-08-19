@@ -17,10 +17,15 @@ const deleteIcon = ({ favoriteID, userID }) => {
             color="black"
             size={30}
             onPress={() => {
+                // delete existing favorite in database
                 dispatch(
                     onPressedDeleteFavorite({ favoriteID, userID })
                 )
 
+                /*
+                fetch updated list of favorites from redux store 
+                dispatch new favorites to redux store 
+                */
                 dispatch(fetchFavorites())
                     .unwrap()
                     .then(currentFavoriteData => {
@@ -34,16 +39,4 @@ const deleteIcon = ({ favoriteID, userID }) => {
     )
 }
 
-const editIcon = ({ favoriteID, userID }) => {
-    return (
-        <Icon
-            name="pencil"
-            type="evilicon"
-            color="black"
-            size={30}
-            onPress={() => console.log(favoriteID + userID)}
-        />
-    )
-}
-
-export { deleteIcon, editIcon }
+export default deleteIcon

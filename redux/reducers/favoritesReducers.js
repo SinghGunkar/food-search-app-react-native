@@ -21,14 +21,13 @@ const favoritesReducers = {
         }
     },
     clearFavoritesState: {
-        reducer(state, action) {
+        reducer(state) {
             state = {}
         }
     },
     addFavorite: {
         reducer(state, action) {
             state["favoritesArray"].push(action.payload)
-            console.log(state)
         }
     }
 }

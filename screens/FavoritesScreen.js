@@ -8,8 +8,7 @@ import {
     setFavorites,
     setUserId,
     setEmail,
-    setName,
-    addFavorite
+    setName
 } from "../redux/slices/favoritesSlice"
 
 const FavoritesScreen = ({ navigation, route }) => {
@@ -39,17 +38,7 @@ const FavoritesScreen = ({ navigation, route }) => {
     return (
         <View style={styles.container}>
             <FavoritesList />
-            <Button
-                title="Add Favorite"
-                onPress={() => {
-                    dispatch(
-                        addFavorite({
-                            _id: "611cf6190c8ebe37083b0a20",
-                            text: "test"
-                        })
-                    )
-                }}
-            />
+
             <Button
                 title="Go To Single Favorite"
                 onPress={() => navigation.navigate("FavoriteStack")}

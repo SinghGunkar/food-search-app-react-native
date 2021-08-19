@@ -1,12 +1,12 @@
 // reducers
 const authReducers = {
     loginUser: {
-        reducer(state, action) {
+        reducer(state) {
             state.isUserLoggedIn = true
         }
     },
     logoutUser: {
-        reducer(state, action) {
+        reducer(state) {
             state.isUserLoggedIn = false
         }
     },
