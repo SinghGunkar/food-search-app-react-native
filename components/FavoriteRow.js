@@ -33,6 +33,7 @@ const FavoriteRow = ({ favorite }) => {
                 Component={editIcon}
                 favoriteID={favoriteID}
                 userID={userID}
+                text={text}
             />
         </ListItem>
     )

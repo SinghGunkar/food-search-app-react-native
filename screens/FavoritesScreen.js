@@ -1,14 +1,10 @@
-import React, {
-    createContext,
-    useState,
-    useLayoutEffect
-} from "react"
-import { View, StyleSheet, Button, Text } from "react-native"
+import React, { useState, useLayoutEffect } from "react"
+import { View, StyleSheet } from "react-native"
 import FavoritesList from "../components/FavoritesList"
 import { getCurrentUserInfo } from "../redux/slices/authSlice"
 import { useDispatch } from "react-redux"
 import AddIcon from "../components/AddButton"
-import AddFavoriteOverlay from "../components/Overlay"
+import AddFavoriteOverlay from "../components/AddFavoriteOverlay"
 
 import {
     setFavorites,
@@ -17,14 +13,14 @@ import {
     setName
 } from "../redux/slices/favoritesSlice"
 
-const UserEditingContext = createContext()
-
 const FavoritesScreen = ({ navigation, route }) => {
     const dispatch = useDispatch()
     const currentUserInfo = dispatch(getCurrentUserInfo())
+
+    // overlay for adding new favorite
     const [isOverlayShowed, setIsOverlayShowed] = useState(false)
 
-    // header button requires interaction with FavoritesScreen
+    // header button requires interaction with components in FavoritesScreen.js
     useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (
@@ -71,4 +67,3 @@ const styles = StyleSheet.create({
 })
 
 export default FavoritesScreen
-export { UserEditingContext }

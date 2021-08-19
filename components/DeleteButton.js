@@ -15,7 +15,7 @@ const deleteIcon = ({ favoriteID, userID }) => {
             name="trash"
             type="evilicon"
             color="black"
-            size={30}
+            size={35}
             onPress={() => {
                 // delete existing favorite in database
                 dispatch(

@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Button, Overlay, Text, Input } from "react-native-elements"
-import { View, StyleSheet } from "react-native"
+import { View } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
 import {
     addNewFavorite,
@@ -56,17 +56,10 @@ const AddFavoriteOverlay = ({
                         // close overlay
                         setIsOverlayShowed(false)
                     }}
-                    style={styles.button}
                 />
             </Overlay>
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    button: {
-        color: "blue"
-    }
-})
 
 export default AddFavoriteOverlay

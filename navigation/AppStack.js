@@ -14,9 +14,7 @@ import FavoriteScreen from "../screens/FavoriteScreen"
 import SearchScreen from "../screens/SearchScreen"
 import AccountScreen from "../screens/AccountScreen"
 import NearByScreen from "../screens/NearByScreen"
-
-// import add button
-import AddIcon from "../components/AddButton"
+import EditFavoriteScreen from "../screens/EditFavoriteScreen"
 
 const Tab = createMaterialBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -38,6 +36,11 @@ const FavoritesStack = () => {
                 options={({ route }) => ({
                     title: ` Search results for: ${route.params.favorite}`
                 })}
+            />
+            <Stack.Screen
+                name="EditFavoriteStack"
+                component={EditFavoriteScreen}
+                options={{ title: "Edit Favorite" }}
             />
         </Stack.Navigator>
     )
