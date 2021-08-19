@@ -1,10 +1,12 @@
 import React from "react"
 import { View, StyleSheet, Text } from "react-native"
 
-const FavoriteScreen = () => {
+const FavoriteScreen = ({ route }) => {
+    const { favorite } = route.params
+
     return (
         <View style={styles.container}>
-            <Text>Display Single Favorite Here</Text>
+            <Text>Search results for the following: {favorite}</Text>
         </View>
     )
 }

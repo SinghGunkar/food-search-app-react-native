@@ -1,8 +1,14 @@
-import React from "react"
-import { View, StyleSheet, Button } from "react-native"
+import React, {
+    createContext,
+    useState,
+    useLayoutEffect
+} from "react"
+import { View, StyleSheet, Button, Text } from "react-native"
 import FavoritesList from "../components/FavoritesList"
 import { getCurrentUserInfo } from "../redux/slices/authSlice"
 import { useDispatch } from "react-redux"
+import AddIcon from "../components/AddButton"
+import AddFavoriteOverlay from "../components/Overlay"
 
 import {
     setFavorites,
@@ -11,9 +17,21 @@ import {
     setName
 } from "../redux/slices/favoritesSlice"
 
+const UserEditingContext = createContext()
+
 const FavoritesScreen = ({ navigation, route }) => {
     const dispatch = useDispatch()
     const currentUserInfo = dispatch(getCurrentUserInfo())
+    const [isOverlayShowed, setIsOverlayShowed] = useState(false)
+
+    // header button requires interaction with FavoritesScreen
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (
+                <AddIcon setIsOverlayShowed={setIsOverlayShowed} />
+            )
+        })
+    }, [navigation, setIsOverlayShowed])
 
     /* 
     when favorites screen loads, fetch current info to render most up to date info
@@ -38,10 +56,9 @@ const FavoritesScreen = ({ navigation, route }) => {
     return (
         <View style={styles.container}>
             <FavoritesList />
-
-            <Button
-                title="Go To Single Favorite"
-                onPress={() => navigation.navigate("FavoriteStack")}
+            <AddFavoriteOverlay
+                setIsOverlayShowed={setIsOverlayShowed}
+                isOverlayShowed={isOverlayShowed}
             />
         </View>
     )
@@ -49,9 +66,9 @@ const FavoritesScreen = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: "pink"
+        flex: 1
     }
 })
 
 export default FavoritesScreen
+export { UserEditingContext }
