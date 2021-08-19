@@ -4,6 +4,26 @@ import favoritesReducers from "../reducers/favoritesReducers"
 
 const initialState = {}
 
+export const addNewFavorite = createAsyncThunk(
+    "favorites/addNewFavorite",
+    async ({ userID, text }) => {
+        try {
+            await databaseAPI.post(
+                "/FoodAPI/v1/user/createFavoriteForUser",
+                {
+                    user_id: userID,
+                    text: text
+                }
+            )
+        } catch (err) {
+            console.log(err)
+            console.log(
+                "Something went wrong when adding a new favorite in favoritesSlice.js"
+            )
+        }
+    }
+)
+
 export const onPressedDeleteFavorite = createAsyncThunk(
     "favorites/onPressedDeleteFavorite",
     async ({ userID, favoriteID }) => {
