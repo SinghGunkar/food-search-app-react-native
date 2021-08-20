@@ -1,7 +1,6 @@
 import React from "react"
-import { StyleSheet, FlatList } from "react-native"
-import { Button } from "react-native-elements/dist/buttons/Button"
-import { useSelector, useDispatch } from "react-redux"
+import { FlatList } from "react-native"
+import { useSelector } from "react-redux"
 import { selectAllFavorites } from "../redux/slices/favoritesSlice"
 import FavoriteRow from "./FavoriteRow"
 
@@ -20,21 +19,5 @@ const FavoritesList = () => {
         />
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "green"
-    },
-
-    bottomTextStyle: {
-        textAlign: "center",
-        marginBottom: 10
-    },
-
-    registerLink: {
-        color: "#3c6dcc"
-    }
-})
 
 export default FavoritesList

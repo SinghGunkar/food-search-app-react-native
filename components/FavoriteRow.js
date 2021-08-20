@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React from "react"
 import { ListItem } from "react-native-elements"
 import deleteIcon from "./DeleteButton"
 import editIcon from "./EditButton"
@@ -14,7 +14,6 @@ const FavoriteRow = ({ favorite }) => {
     return (
         <ListItem
             onPress={() => {
-                console.log("Search for: " + text)
                 RootNavigation.navigate("FavoriteStack", {
                     favorite: text
                 })
