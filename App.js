@@ -1,6 +1,5 @@
 import React from "react"
 import { Provider } from "react-redux"
-
 // redux imports
 import store from "./redux/store"
 

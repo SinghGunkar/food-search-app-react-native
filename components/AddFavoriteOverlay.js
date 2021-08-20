@@ -24,7 +24,7 @@ const AddFavoriteOverlay = ({
                 onBackdropPress={() => setIsOverlayShowed(false)}
                 animationType={"slide"}
             >
-                <Text h2>Add new favorite</Text>
+                <Text h2>Add New Favorite</Text>
                 <View>
                     <Input
                         placeholder="Enter text"

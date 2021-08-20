@@ -7,7 +7,11 @@ const NearByScreen = ({ navigation, route }) => {
             <Text>Near You</Text>
             <Button
                 title="Go To Single Favorite"
-                onPress={() => navigation.navigate("FavoriteStack")}
+                onPress={() =>
+                    navigation.navigate("FavoriteStack", {
+                        favorite: "Set favorite in NearByScreen.js"
+                    })
+                }
             />
         </View>
     )

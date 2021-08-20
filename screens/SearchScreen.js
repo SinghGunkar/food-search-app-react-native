@@ -7,7 +7,11 @@ const SearchScreen = ({ navigation }) => {
             <Text>Search for places here</Text>
             <Button
                 title="Go To Single Favorite"
-                onPress={() => navigation.navigate("FavoriteStack")}
+                onPress={() =>
+                    navigation.navigate("FavoriteStack", {
+                        favorite: "Set favorite in SearchScren.js"
+                    })
+                }
             />
         </View>
     )

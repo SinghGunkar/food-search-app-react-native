@@ -6,11 +6,10 @@ import {
     AntDesign,
     MaterialIcons
 } from "@expo/vector-icons"
-import { Button } from "react-native"
 
 // screen imports
 import FavoritesScreen from "../screens/FavoritesScreen"
-import FavoriteScreen from "../screens/FavoriteScreen"
+import SearchResultsScreen from "../screens/SearchResultsScreen"
 import SearchScreen from "../screens/SearchScreen"
 import AccountScreen from "../screens/AccountScreen"
 import NearByScreen from "../screens/NearByScreen"
@@ -32,7 +31,7 @@ const FavoritesStack = () => {
             />
             <Stack.Screen
                 name="FavoriteStack"
-                component={FavoriteScreen}
+                component={SearchResultsScreen}
                 options={({ route }) => ({
                     title: ` Search results for: ${route.params.favorite}`
                 })}
@@ -55,7 +54,7 @@ const SearchStack = () => {
             />
             <Stack.Screen
                 name="FavoriteStack"
-                component={FavoriteScreen}
+                component={SearchResultsScreen}
                 options={{ title: "Display Single Favorite " }}
             />
         </Stack.Navigator>
@@ -72,7 +71,7 @@ const NearByStack = () => {
             />
             <Stack.Screen
                 name="FavoriteStack"
-                component={FavoriteScreen}
+                component={SearchResultsScreen}
                 options={{ title: "Display Single Favorite " }}
             />
         </Stack.Navigator>

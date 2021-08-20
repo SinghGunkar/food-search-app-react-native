@@ -14,7 +14,7 @@ const FavoriteRow = ({ favorite }) => {
     return (
         <ListItem
             onPress={() => {
-                console.log("Search for: " + text + " using \n" + _id)
+                console.log("Search for: " + text)
                 RootNavigation.navigate("FavoriteStack", {
                     favorite: text
                 })
