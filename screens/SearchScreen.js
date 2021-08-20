@@ -1,18 +1,43 @@
-import React from "react"
+import React, { useState } from "react"
 import { View, Text, StyleSheet, Button } from "react-native"
+import SearchBar from "../components/Searchbar"
+import useResults from "../customHooks/useResults"
+import SearchResultsList from "../components/SearchResultsList"
 
 const SearchScreen = ({ navigation }) => {
+    // state
+    const [searchTerm, setSearchTerm] = useState("")
+    const [isViewDetails, setIsViewDetails] = useState(false)
+
+    // default coordinates, change them later
+    const latitude = 53.48369
+    const longitude = -113.39648
+    const coordinates = { latitude, longitude }
+
+    // custom hook
+    const [fetchResults, searchResults, isSearchError] = useResults()
+
+    const onTermSubmit = () => {
+        fetchResults(searchTerm, coordinates)
+        setSearchTerm("")
+    }
+
     return (
         <View style={styles.container}>
-            <Text>Search for places here</Text>
-            <Button
-                title="Go To Single Favorite"
-                onPress={() =>
-                    navigation.navigate("FavoriteStack", {
-                        favorite: "Set favorite in SearchScren.js"
-                    })
-                }
-            />
+            {isViewDetails ? (
+                <Text>Show details here</Text>
+            ) : (
+                <View style={styles.container}>
+                    <SearchBar
+                        searchTerm={searchTerm}
+                        onSearchTermChange={setSearchTerm}
+                        onTermSubmit={onTermSubmit}
+                    />
+                    <SearchResultsList
+                        searchResults={searchResults}
+                    />
+                </View>
+            )}
         </View>
     )
 }
@@ -20,8 +45,9 @@ const SearchScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: "center",
-        justifyContent: "center"
+        backgroundColor: "white"
+        // alignItems: "center",
+        // justifyContent: "center"
     }
 })
 

@@ -16,7 +16,7 @@ const SearchResultsScreen = ({ route }) => {
     const [fetchResults, searchResults, isSearchError] =
         useResults(searchTerm)
 
-    // fetch results vis useEffect
+    // fetch results via useEffect
     useEffect(() => {
         fetchResults(searchTerm, coordinates)
     }, [])

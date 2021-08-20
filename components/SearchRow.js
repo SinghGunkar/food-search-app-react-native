@@ -1,6 +1,6 @@
 import React from "react"
 import { ListItem, Text } from "react-native-elements"
-import { StyleSheet } from "react-native"
+import { StyleSheet, Linking } from "react-native"
 
 const SearchRow = ({ data }) => {
     const {
@@ -10,7 +10,8 @@ const SearchRow = ({ data }) => {
         name,
         rating,
         price,
-        is_closed
+        is_closed,
+        url
     } = data
 
     const categoriesAsString = categories
@@ -21,7 +22,11 @@ const SearchRow = ({ data }) => {
         .replaceAll(",", "")
 
     return (
-        <ListItem bottomDivider containerStyle={styles.rowContainer}>
+        <ListItem
+            bottomDivider
+            containerStyle={styles.rowContainer}
+            onPress={() => Linking.openURL(url)}
+        >
             <ListItem.Content style={styles.leftContainer}>
                 <ListItem.Title>
                     <Text h4>{name}</Text>
@@ -31,9 +36,8 @@ const SearchRow = ({ data }) => {
                     {categoriesAsString}
                 </ListItem.Subtitle>
                 <Text>
-                    {location.address1}
-                    {" | "}
-                    {Math.round(distance / 1000)}km
+                    {location.address1} {Math.round(distance / 1000)}
+                    km
                 </Text>
             </ListItem.Content>
 

@@ -1,27 +1,49 @@
-import React from "react"
-import { View, Text, StyleSheet, Button } from "react-native"
+import React, { useEffect, useState } from "react"
+import { View, Text, StyleSheet } from "react-native"
+import useLocation from "../customHooks/useLocation"
+import useResults from "../customHooks/useResults"
+import SearchResultsList from "../components/SearchResultsList"
 
-const NearByScreen = ({ navigation, route }) => {
+const NearByScreen = () => {
+    const [fetchLocation, location, isLocationError] = useLocation()
+    const [fetchResults, searchResults, isSearchError] = useResults()
+    const [isError, setIsError] = useState(false)
+
+    // get user longitude and latitude
+    useEffect(() => {
+        fetchLocation()
+    }, [])
+
+    // after getting user longitude and latitude => initiate search
+    useEffect(() => {
+        if (location && !isLocationError) {
+            const { latitude, longitude } = location.coords
+            fetchResults("food", { latitude, longitude })
+        }
+
+        if (isLocationError || isSearchError) {
+            setIsError(true)
+        }
+    }, [location])
+
     return (
         <View style={styles.container}>
-            <Text>Near You</Text>
-            <Button
-                title="Go To Single Favorite"
-                onPress={() =>
-                    navigation.navigate("FavoriteStack", {
-                        favorite: "Set favorite in NearByScreen.js"
-                    })
-                }
-            />
+            {isError ? (
+                <Text>
+                    {
+                        "Error when searching, check permissions ot try again later"
+                    }
+                </Text>
+            ) : (
+                <SearchResultsList searchResults={searchResults} />
+            )}
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center"
+        flex: 1
     }
 })
 

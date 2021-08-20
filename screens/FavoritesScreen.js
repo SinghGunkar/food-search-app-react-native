@@ -30,8 +30,7 @@ const FavoritesScreen = ({ navigation, route }) => {
     }, [navigation, setIsOverlayShowed])
 
     /* 
-    when favorites screen loads, fetch current info to render most up to date info
-    Note: 
+    when favorites screen loads, fetch current info to render most up to date info.
     unwrap "currentUserInfo" because "getCurrentUserInfo()" created by createAsyncThunk will always 
     return a resolved promise with either the fulfilled action object or rejected object
     */

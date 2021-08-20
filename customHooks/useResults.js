@@ -19,12 +19,6 @@ const useResults = () => {
                 }
             })
 
-            console.log(
-                "Found " +
-                    response.data.businesses.length +
-                    " results"
-            )
-
             setSearchResults(response.data.businesses)
         } catch (err) {
             console.log(err)
