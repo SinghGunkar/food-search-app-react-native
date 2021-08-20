@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { View } from "react-native"
 import { Text } from "react-native-elements"
+import yelpAPI from "../APIs/yelp"
 
 const SearchResultsList = ({ searchTerm }) => {
     const [counter, setCounter] = useState(0)
