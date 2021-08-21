@@ -1,13 +1,18 @@
 // reducers
 const apiReducers = {
-    setUserGeolocationCoords: {
+    setIsError: {
         reducer(state, action) {
-            state.coords = action.payload
+            state.isError = action.payload
         }
     },
-    setErrorMessage: {
-        reducer(state, action) {
-            state.errorMessage = action.payload
+    setIsLoading: {
+        reducer(state) {
+            state.isLoading = action.payload
+        }
+    },
+    setLocationAPIStatus: {
+        reducer(state) {
+            state.locationAPIStatus = action.payload
         }
     }
 }

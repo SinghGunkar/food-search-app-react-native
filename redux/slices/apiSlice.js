@@ -7,8 +7,29 @@ import yelpAPI from "../../APIs/yelp"
 const initialState = {
     coords: {},
     locationAPIStatus: "idle",
-    error: null
+    searchAPIStatus: "idle",
+    isError: false,
+    isLoading: false
 }
+
+export const fetchSearchResults = createAsyncThunk(
+    "api/fetchSearchResults",
+    async ({ searchTerm, latitude, longitude }, thunkAPI) => {
+        try {
+            const response = await yelpAPI.get("/search", {
+                params: {
+                    limit: 50,
+                    term: searchTerm,
+                    latitude,
+                    longitude
+                }
+            })
+            return response.data.businesses
+        } catch (err) {
+            console.log("Error in apiSlice => fetchSearchResults")
+        }
+    }
+)
 
 export const fetchUserCoords = createAsyncThunk(
     "api/fetchUserCoords",
@@ -18,7 +39,6 @@ export const fetchUserCoords = createAsyncThunk(
                 await Location.requestForegroundPermissionsAsync()
 
             if (status !== "granted") {
-                // maybe set isLocationError to true
                 return
             }
 
@@ -52,28 +72,33 @@ const apiSlice = createSlice({
     initialState: initialState,
     reducers: apiReducers,
     extraReducers: {
+        // are executed on requests
         [fetchUserCoords.fulfilled]: (state, action) => {
             state.coords = action.payload
             state.locationAPIStatus = "fulfilled"
-            console.log("Extra reducers => fulfilled")
+            state.isError = false
+            state.isLoading = false
         },
         [fetchUserCoords.pending]: state => {
             state.locationAPIStatus = "loading"
-            console.log("Extra reducers => pending")
+            state.isError = false
+            state.isLoading = true
         },
         [fetchUserCoords.rejected]: state => {
             state.locationAPIStatus = "failed"
-            console.log("Extra reducers => rejected")
+            state.isError = true
+            state.isLoading = true
         }
     }
 })
 
 // named action exports, check apiReducers.js for reducer names
-export const { setUserGeolocationCoords, setErrorMessage } =
+export const { setIsError, setIsLoading, locationAPIStatus } =
     apiSlice.actions
 
 // selectors
 export const selectCoords = state => state.api.coords
+export const selectAPIState = state => state.api
 
 // export reducer by default
 export default apiSlice.reducer

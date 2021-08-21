@@ -1,37 +1,78 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { View, Text, StyleSheet } from "react-native"
-import useLocation from "../customHooks/useLocation"
-import useResults from "../customHooks/useResults"
+import { Button } from "react-native-elements"
+import { useDispatch, useSelector } from "react-redux"
+import { selectAPIState } from "../redux/slices/apiSlice"
+import {
+    fetchUserCoords,
+    fetchSearchResults
+} from "../redux/slices/apiSlice"
 import SearchResultsList from "../components/SearchResultsList"
+import {
+    setIsError,
+    setIsLoading,
+    setLocationAPIStatus
+} from "../redux/slices/apiSlice"
 
 const NearByScreen = () => {
-    const [fetchLocation, location, isLocationError] = useLocation()
-    const [fetchResults, searchResults, isSearchError] = useResults()
+    const dispatch = useDispatch()
 
-    // get user longitude and latitude
+    // first fetch user coordinate(s) via geo API
     useEffect(() => {
-        fetchLocation()
-    }, [])
+        dispatch(fetchUserCoords())
+    })
 
-    // after getting user longitude and latitude => initiate search
+    // state
+    const apiState = useSelector(selectAPIState)
+    const [results, setResults] = useState({})
+    const {
+        coords,
+        isError,
+        isLoading,
+        locationAPIStatus,
+        searchAPIStatus
+    } = apiState
+
+    // using fetched coordinates => get search results
     useEffect(() => {
-        if (location && !isLocationError) {
-            const { latitude, longitude } = location.coords
-            fetchResults("food", { latitude, longitude })
+        if (locationAPIStatus === "fulfilled") {
+            console.log("test")
+            dispatch(
+                fetchSearchResults({
+                    searchTerm: "food",
+                    latitude: coords.coords.latitude,
+                    longitude: coords.coords.longitude
+                })
+            )
+                .unwrap()
+                .then(originalPromiseResult => {
+                    setResults(originalPromiseResult)
+                })
+                .catch(rejectedValueOrSerializedError => {
+                    dispatch(setIsError(true))
+                    dispatch(setIsLoading(false))
+                    dispatch(setLocationAPIStatus("failed"))
+                })
         }
-    }, [location])
+    }, [locationAPIStatus])
 
     return (
         <View style={styles.container}>
-            {isLocationError || isSearchError ? (
-                <Text style={styles.errorMessage}>
-                    {
-                        "Error when searching, check permissions or try again later"
-                    }
-                </Text>
-            ) : (
-                <SearchResultsList searchResults={searchResults} />
-            )}
+            {(() => {
+                if (isError) {
+                    return (
+                        <Text style={styles.errorMessage}>
+                            Error try again later || display refresh
+                            button
+                        </Text>
+                    )
+                }
+                if (isLoading) {
+                    return <Button title="Loading button" loading />
+                }
+
+                return <SearchResultsList searchResults={results} />
+            })()}
         </View>
     )
 }
@@ -44,6 +85,9 @@ const styles = StyleSheet.create({
         textAlign: "center",
         marginTop: 20,
         fontWeight: "300"
+    },
+    loader: {
+        backgroundColor: "red"
     }
 })
 
