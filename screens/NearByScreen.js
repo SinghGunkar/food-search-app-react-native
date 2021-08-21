@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { View, Text, StyleSheet } from "react-native"
 import useLocation from "../customHooks/useLocation"
 import useResults from "../customHooks/useResults"
@@ -7,7 +7,6 @@ import SearchResultsList from "../components/SearchResultsList"
 const NearByScreen = () => {
     const [fetchLocation, location, isLocationError] = useLocation()
     const [fetchResults, searchResults, isSearchError] = useResults()
-    const [isError, setIsError] = useState(false)
 
     // get user longitude and latitude
     useEffect(() => {
@@ -20,18 +19,14 @@ const NearByScreen = () => {
             const { latitude, longitude } = location.coords
             fetchResults("food", { latitude, longitude })
         }
-
-        if (isLocationError || isSearchError) {
-            setIsError(true)
-        }
     }, [location])
 
     return (
         <View style={styles.container}>
-            {isError ? (
-                <Text>
+            {isLocationError || isSearchError ? (
+                <Text style={styles.errorMessage}>
                     {
-                        "Error when searching, check permissions ot try again later"
+                        "Error when searching, check permissions or try again later"
                     }
                 </Text>
             ) : (
@@ -44,6 +39,11 @@ const NearByScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1
+    },
+    errorMessage: {
+        textAlign: "center",
+        marginTop: 20,
+        fontWeight: "300"
     }
 })
 

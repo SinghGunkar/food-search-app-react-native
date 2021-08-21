@@ -12,10 +12,10 @@ import {
 
 const SignUpForm = () => {
     // state for login form
-    const [userName, setUsername] = useState("test1234")
-    const [email, setEmail] = useState("test1234@gmail.com")
-    const [password1, setPassword1] = useState("123456")
-    const [password2, setPassword2] = useState("123456")
+    const [userName, setUsername] = useState("")
+    const [email, setEmail] = useState("")
+    const [password1, setPassword1] = useState("")
+    const [password2, setPassword2] = useState("")
 
     const loginState = {
         userName,

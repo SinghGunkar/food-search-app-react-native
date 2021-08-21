@@ -59,7 +59,9 @@ export const handleUserLogout = createAsyncThunk(
             thunkAPI.dispatch(logoutUser())
         } catch (err) {
             console.log(err)
-            const errMsg = `Issue when trying to logout user in authSlice.js`
+            console.log(
+                `Issue when trying to logout user in authSlice.js`
+            )
         }
     }
 )
@@ -107,7 +109,9 @@ export const getCurrentUserInfo = createAsyncThunk(
             return { _id, email, favorites, name }
         } catch (err) {
             console.log(err)
-            const errMsg = `Something went wrong when fetching current user info`
+            console.log(
+                `Something went wrong when fetching current user info`
+            )
         }
     }
 )

@@ -11,8 +11,8 @@ import {
 
 const SignInForm = () => {
     // state for login form
-    const [email, setEmail] = useState("test1234@gmail.com")
-    const [password, setPassword] = useState("1234567")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
 
     const dispatch = useDispatch()
     const errorMsg = useSelector(selectAuthState).errorMessage
