@@ -16,11 +16,12 @@ import {
 
 const NearByScreen = () => {
     const dispatch = useDispatch()
+    const [refresh, setRefresh] = useState(false)
 
     // first fetch user coordinate(s) via geo API
     useEffect(() => {
         dispatch(fetchUserCoords())
-    })
+    }, [refresh])
 
     // state
     const apiState = useSelector(selectAPIState)
@@ -36,7 +37,6 @@ const NearByScreen = () => {
     // using fetched coordinates => get search results
     useEffect(() => {
         if (locationAPIStatus === "fulfilled") {
-            console.log("test")
             dispatch(
                 fetchSearchResults({
                     searchTerm: "food",
@@ -61,14 +61,34 @@ const NearByScreen = () => {
             {(() => {
                 if (isError) {
                     return (
-                        <Text style={styles.errorMessage}>
-                            Error try again later || display refresh
-                            button
-                        </Text>
+                        <View>
+                            <Text style={styles.errorMessage}>
+                                There was an error, please try again
+                                later. Ensure that you have location
+                                enabled for this app and that you are
+                                connected to Wifi
+                            </Text>
+                            <Button
+                                title="Refresh"
+                                type="clear"
+                                onPress={() =>
+                                    setRefresh(
+                                        prevState => !prevState
+                                    )
+                                }
+                            />
+                        </View>
                     )
                 }
                 if (isLoading) {
-                    return <Button title="Loading button" loading />
+                    return (
+                        <Button
+                            title="Loading button"
+                            loading
+                            type="clear"
+                            style={styles.loader}
+                        />
+                    )
                 }
 
                 return <SearchResultsList searchResults={results} />
@@ -79,15 +99,15 @@ const NearByScreen = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        flexDirection: "column",
+        justifyContent: "space-around"
     },
     errorMessage: {
         textAlign: "center",
         marginTop: 20,
-        fontWeight: "300"
-    },
-    loader: {
-        backgroundColor: "red"
+        fontWeight: "300",
+        fontSize: 15
     }
 })
 
