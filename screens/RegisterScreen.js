@@ -5,10 +5,10 @@ import styles from "../styles/globalStyles"
 import { attemptAutoLocalSignIn } from "../redux/slices/authSlice"
 import { useDispatch } from "react-redux"
 
-const RegisterScreen = props => {
-    // attempt to automatically sign in
+const RegisterScreen = ({ navigation }) => {
     const dispatch = useDispatch()
 
+    // attempt to automatically sign in
     useEffect(() => {
         dispatch(attemptAutoLocalSignIn())
     }, [])
