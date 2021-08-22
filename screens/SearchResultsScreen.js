@@ -1,32 +1,60 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { View, StyleSheet } from "react-native"
-import { Text } from "react-native-elements"
+import { Text, Button } from "react-native-elements"
 import SearchResultsList from "../components/SearchResultsList"
 import useResults from "../customHooks/useResults"
+import ipGeoLocationAPI from "../APIs/ipGeolocation"
 
 const SearchResultsScreen = ({ route }) => {
-    const { favorite } = route.params
-    const searchTerm = favorite
+    // state
+    const [searchTerm, setSearchTerm] = useState("")
+    const [isError, setIsError] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
-    const latitude = 53.48369
-    const longitude = -113.39648
-    const coordinates = { latitude, longitude }
+    const { favorite } = route.params
 
     // custom hook
-    const [fetchResults, searchResults, isSearchError] =
-        useResults(searchTerm)
+    const [fetchResults, searchResults] = useResults(searchTerm)
 
     // fetch results via useEffect
     useEffect(() => {
-        fetchResults(searchTerm, coordinates)
+        setSearchTerm(favorite)
+        setIsLoading(true)
+        async function fetchLocationData() {
+            const response = ipGeoLocationAPI.get()
+            return response
+        }
+
+        // then fetch data from yelp using user location
+        fetchLocationData()
+            .then(({ data }) => {
+                const { longitude, latitude } = data
+                fetchResults(searchTerm, {
+                    latitude,
+                    longitude
+                })
+                    .then(() => {
+                        setIsLoading(false)
+                    })
+                    .catch(e => {
+                        setIsError(true)
+                        setIsLoading(false)
+                    })
+            })
+            .catch(e => {
+                setIsError(true)
+                setIsLoading(false)
+            })
     }, [])
 
     return (
         <View style={styles.container}>
-            {isSearchError ? (
+            {isError ? (
                 <Text h3 style={styles.errorMessage}>
                     Error when searching Please try again later
                 </Text>
+            ) : isLoading ? (
+                <Button title="Loading button" loading type="clear" />
             ) : (
                 <SearchResultsList searchResults={searchResults} />
             )}
@@ -36,7 +64,9 @@ const SearchResultsScreen = ({ route }) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        flexDirection: "column",
+        justifyContent: "space-around"
     },
     errorMessage: {
         fontWeight: "300",
