@@ -1,8 +1,11 @@
 import React from "react"
 import { View, StyleSheet, Button } from "react-native"
 import { handleUserLogout } from "../redux/slices/authSlice"
+import { useDispatch } from "react-redux"
 
 const AccountScreen = () => {
+    const dispatch = useDispatch()
+
     return (
         <View style={styles.container}>
             <Button

@@ -1,31 +1,80 @@
 import React, { useState } from "react"
-import { View, Text, StyleSheet, Button } from "react-native"
+import { View, Text, StyleSheet } from "react-native"
+import { Button } from "react-native-elements"
 import SearchBar from "../components/Searchbar"
 import useResults from "../customHooks/useResults"
 import SearchResultsList from "../components/SearchResultsList"
+import ipGeoLocationAPI from "../APIs/ipGeolocation"
 
-const SearchScreen = ({ navigation }) => {
+const SearchScreen = () => {
     // state
     const [searchTerm, setSearchTerm] = useState("")
-    const [isViewDetails, setIsViewDetails] = useState(false)
-
-    // default coordinates, change them later
-    const latitude = 53.48369
-    const longitude = -113.39648
-    const coordinates = { latitude, longitude }
+    const [isError, setIsError] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     // custom hook
-    const [fetchResults, searchResults, isSearchError] = useResults()
+    const [fetchResults, searchResults] = useResults()
 
     const onTermSubmit = () => {
-        fetchResults(searchTerm, coordinates)
-        setSearchTerm("")
+        // on submit another request if reqeust is not loading
+        if (!isLoading) {
+            // reset state
+            setIsError(false)
+            setIsLoading(true)
+
+            // define fetchLocationData
+            async function fetchLocationData() {
+                const response = ipGeoLocationAPI.get()
+                return response
+            }
+
+            // then fetch data from yelp using user location
+            fetchLocationData()
+                .then(({ data }) => {
+                    const { longitude, latitude } = data
+                    fetchResults(searchTerm, {
+                        latitude,
+                        longitude
+                    })
+                        .then(() => {
+                            setIsLoading(false)
+                        })
+                        .catch(e => {
+                            setIsError(true)
+                            setIsLoading(false)
+                        })
+                })
+                .catch(e => {
+                    setIsError(true)
+                    setIsLoading(false)
+                })
+        }
     }
 
+    // conditionally render content
     return (
         <View style={styles.container}>
-            {isViewDetails ? (
-                <Text>Show details here</Text>
+            {isError ? (
+                <View>
+                    <Text style={styles.errorMessage}>
+                        There was an error, please try again later
+                    </Text>
+                    <Button
+                        title="Go Back"
+                        type="clear"
+                        style={styles.loader}
+                        onPress={() => {
+                            setIsError(false)
+                        }}
+                    />
+                </View>
+            ) : isLoading ? (
+                <Button
+                    title="Loading button"
+                    loading
+                    type="clear"
+                    style={styles.loader}
+                />
             ) : (
                 <View style={styles.container}>
                     <SearchBar
@@ -45,9 +94,14 @@ const SearchScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "white"
-        // alignItems: "center",
-        // justifyContent: "center"
+        backgroundColor: "white",
+        flexDirection: "column",
+        justifyContent: "space-around"
+    },
+    errorMessage: {
+        textAlign: "center",
+        fontWeight: "300",
+        fontSize: 15
     }
 })
 

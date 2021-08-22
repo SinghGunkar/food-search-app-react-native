@@ -56,6 +56,8 @@ const NearByScreen = () => {
         }
     }, [locationAPIStatus])
 
+    // conditionally render one of three states
+    // results || loading || error
     return (
         <View style={styles.container}>
             {(() => {
@@ -86,7 +88,6 @@ const NearByScreen = () => {
                             title="Loading button"
                             loading
                             type="clear"
-                            style={styles.loader}
                         />
                     )
                 }
