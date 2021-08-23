@@ -6,7 +6,7 @@
 
 -   React Native
 -   React
--   MongoDB
+-   MongoDB (deployed using Digital Ocean free tier)
 -   Node
 -   Axios
 -   Express
@@ -75,4 +75,44 @@
     </table>
 </div>
 
-## Key takeaways
+## Key takeaway(s)
+
+Below are some lessons I learned during this project
+
+<hr />
+
+##### Problem: end point misconfiguration
+
+##### Lesson: exhaustively test all end points from client side during developing before deploying a backend to production
+
+-   An end point was configured as `GET` when it should have been `POST`. However, I had already deployed my back end to production. As a result I could not request some user data from the database using the miconfigured endpoint. I used an alternative end point to fetch the data instead. This solved the problem but decreased code clarity.
+<hr />
+
+##### Problem: state management complexity
+
+##### Lesson: use redux and systematically plan the react componenet tree prior to development
+
+-   State and prop management (using react native) became complex as the componenet tree became more nested. I found myself having to pass props down through multiple componenets. Certain components did not have easy access to the required state variables. I was midway through development but had to scrap the entire project and restart using redux. The redux design pattern adds structure and forces a developer to code using the redux design pattern.
+<hr />
+
+##### Problem: failing to track API status
+
+##### Lesson: always track the status of an API request and provide UI feedback
+
+-   Failing to track API status causes problems during development and gives a poor UI experience. When chaining API requests, I needed to know that the first API request had completed before I could submit the second request. For example, fetching a user's geolocation coordinates and then searching for restaruants based of those cooridnates becomes complex if API request statu(s) is not tracked. Redux's createSlice() function is a good tool for this.
+
+*   Once a user makes an API request, always show a loading indicator and disable the user's ability to make another request if a current request is in progress.
+<hr />
+
+##### Problem: seperation of concerns for react components and screens
+
+##### Lesson: componenets should primarily be responsible for rendering props, screens should primarily be responsible for perform side effects
+
+-   To maximize componenet reusability, components should receive data and callbacks as props. Screen should perform side effects such as making API requests. If componenets contain logic from API requqest they become less reusable. This problem can be avoided by keeping logic for side effects outside of componenets.
+<hr />
+
+##### Problem: FlatList componenet from "react-native-elements" performance
+
+##### Lesson: components from standard libary are not always optimized for performance, proceed with caution when using components from third party libararies
+
+-   FlatList has performance issues when rendering large lists. The following [link](https://reactnative.dev/docs/optimizing-flatlist-configuration) was helpful to mitigate the problem. Don't assume that code from thrid part libararies will be performant.
