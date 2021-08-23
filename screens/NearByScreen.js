@@ -2,26 +2,19 @@ import React, { useEffect, useState } from "react"
 import { View, Text, StyleSheet } from "react-native"
 import { Button } from "react-native-elements"
 import { useDispatch, useSelector } from "react-redux"
-import { selectAPIState } from "../redux/slices/apiSlice"
 import {
+    selectAPIState,
     fetchUserCoords,
-    fetchSearchResults
-} from "../redux/slices/apiSlice"
-import SearchResultsList from "../components/SearchResultsList"
-import {
+    fetchSearchResults,
     setIsError,
     setIsLoading,
     setLocationAPIStatus
 } from "../redux/slices/apiSlice"
+import SearchResultsList from "../components/SearchResultsList"
 
 const NearByScreen = () => {
     const dispatch = useDispatch()
     const [refresh, setRefresh] = useState(false)
-
-    // first fetch user coordinate(s) via geo API
-    useEffect(() => {
-        dispatch(fetchUserCoords())
-    }, [refresh])
 
     // state
     const apiState = useSelector(selectAPIState)
@@ -33,6 +26,11 @@ const NearByScreen = () => {
         locationAPIStatus,
         searchAPIStatus
     } = apiState
+
+    // first fetch user coordinate(s) via geo API
+    useEffect(() => {
+        dispatch(fetchUserCoords())
+    }, [refresh])
 
     // using fetched coordinates => get search results
     useEffect(() => {
@@ -73,11 +71,9 @@ const NearByScreen = () => {
                             <Button
                                 title="Refresh"
                                 type="clear"
-                                onPress={() =>
-                                    setRefresh(
-                                        prevState => !prevState
-                                    )
-                                }
+                                onPress={setRefresh(
+                                    prevState => !prevState
+                                )}
                             />
                         </View>
                     )
