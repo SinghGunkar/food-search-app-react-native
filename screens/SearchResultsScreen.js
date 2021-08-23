@@ -14,7 +14,7 @@ const SearchResultsScreen = ({ route }) => {
     const { favorite } = route.params
 
     // custom hook
-    const [fetchResults, searchResults] = useResults(searchTerm)
+    const [fetchResults, searchResults] = useResults(favorite)
 
     // fetch results via useEffect
     useEffect(() => {
