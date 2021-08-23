@@ -13,8 +13,8 @@
 -   State management: redux/react-redux
 -   Authentication: jwt token & bcrypt
 -   Middlleware for backend security
-    -   helmet and xss for xss prevention
-    -   hpp for http param pollution
+    -   helmet and xss (for xss prevention)
+    -   hpp (for http param pollution)
 -   Other
     -   Custom hooks for api requests
     -   Yelp api for search results
@@ -32,29 +32,47 @@
 6.  Expo will launch and show QR code in browser
 7.  Scan the QR code with your phone (you will need the expo go app installed)
 
+## Features
+
+-   Authentication (login, register, logout)
+-   Create new favorites for a user
+-   Delete existing favorites for a user
+-   Edit existing favorites for a user
+-   User favorites are automatically fetched on user login
+-   Authenication persistence and auto-login
+-   Search for restaurants/businesses via geolocation and yelp's API
+-   Get nearby food places via expo-location and yelp's API
+-   Loading indicators for the search and nearby screen
+-   Number of favorites for a user displayed on the account screen
+-   Authentication validation with error message displayed
+
 ## Food Search App Screenshots
 
--   Below are some screen shots of the app (in no particular order)
+-   Below are some screenshots of the app (in no particular order)
 
-<table>
-  <tr>
-    <td><img src="./images/1-register-screen.PNG" ></td>
-    <td><img src="./images/2-login-screen.PNG" ></td>
-    <td><img src="/images/12-registration-error.PNG"></td>
-  </tr>
-  <tr>
-    <td><img src="./images/3-add-fav.PNG" ></td>
-    <td><img src="./images/5-search-results-japanese-food.PNG" ></td>
-    <td><img src="/images/6-italian-food-search.PNG" ></td>
-  </tr>
-  <tr>
-    <td><img src="./images/7-logout-account-screen.PNG" ></td>
-    <td><img src="./images/8-near-you.PNG" ></td>
-    <td><img src="/images/9-search-results-near you.PNG"></td>
-  </tr>
-  <tr>
-    <td><img src="./images/10-edit-fav.PNG" ></td>
-    <td><img src="./images/11-list-of-favorites.PNG" ></td>
-    <td><img src="./images/4-search-for-japanese-food-loading.PNG" ></td>
-  </tr>
- </table>
+<div>
+    <table>
+    <tr>
+        <td><img src="./images/1-register-screen.PNG" ></td>
+        <td><img src="./images/2-login-screen.PNG" ></td>
+        <td><img src="/images/12-registration-error.PNG"></td>
+    </tr>
+    <tr>
+        <td><img src="./images/3-add-fav.PNG" ></td>
+        <td><img src="./images/5-search-results-japanese-food.PNG" ></td>
+        <td><img src="/images/6-italian-food-search.PNG" ></td>
+    </tr>
+    <tr>
+        <td><img src="./images/7-logout-account-screen.PNG" ></td>
+        <td><img src="./images/8-near-you.PNG" ></td>
+        <td><img src="/images/9-search-results-near you.PNG"></td>
+    </tr>
+    <tr>
+        <td><img src="./images/10-edit-fav.PNG" ></td>
+        <td><img src="./images/11-list-of-favorites.PNG" ></td>
+        <td><img src="./images/4-search-for-japanese-food-loading.PNG" ></td>
+    </tr>
+    </table>
+</div>
+
+## Key takeaways
