@@ -7,33 +7,34 @@ import ipGeoLocationAPI from "../APIs/ipGeolocation"
 
 const SearchResultsScreen = ({ route }) => {
     // state
-    const [searchTerm, setSearchTerm] = useState("")
     const [isError, setIsError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
 
     const { favorite } = route.params
 
     // custom hook
-    const [fetchResults, searchResults] = useResults(favorite)
+    const [fetchResults, searchResults, ] = useResults(favorite)
 
     // fetch results via useEffect
     useEffect(() => {
-        setSearchTerm(favorite)
         setIsLoading(true)
         async function fetchLocationData() {
             const response = ipGeoLocationAPI.get()
             return response
         }
 
+        const searchTerm = route.params.favorite
+
         // then fetch data from yelp using user location
         fetchLocationData()
             .then(({ data }) => {
                 const { longitude, latitude } = data
+                
                 fetchResults(searchTerm, {
                     latitude,
                     longitude
                 })
-                    .then(() => {
+                    .then((res) => {
                         setIsLoading(false)
                     })
                     .catch(e => {
@@ -71,8 +72,7 @@ const styles = StyleSheet.create({
     errorMessage: {
         fontWeight: "300",
         padding: 50,
-        textAlign: "center",
-        top: "30%"
+        textAlign: "center"
     }
 })
 

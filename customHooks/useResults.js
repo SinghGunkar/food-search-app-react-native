@@ -10,6 +10,7 @@ const useResults = () => {
         { latitude, longitude }
     ) => {
         try {
+            
             const response = await yelpAPI.get("/search", {
                 params: {
                     limit: 50,
@@ -18,8 +19,9 @@ const useResults = () => {
                     longitude
                 }
             })
-
+            
             setSearchResults(response.data.businesses)
+            
         } catch (err) {
             console.log(err)
             console.log("Something went wrong in useResults.js")
@@ -27,7 +29,7 @@ const useResults = () => {
         }
     }
 
-    return [fetchResults, searchResults, isSearchError]
+    return [fetchResults, searchResults, setSearchResults, isSearchError]
 }
 
 export default useResults
