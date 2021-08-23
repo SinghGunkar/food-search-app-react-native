@@ -5,6 +5,7 @@ import styles from "../styles/globalStyles"
 import { attemptAutoLocalSignIn } from "../redux/slices/authSlice"
 import { useDispatch } from "react-redux"
 
+
 const RegisterScreen = ({ navigation }) => {
     const dispatch = useDispatch()
 
