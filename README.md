@@ -1,6 +1,6 @@
 # Food Search App
 
--   Documentation and code for the backend can be found [here](https://github.com/SinghGunkar/food-app-API)
+-   Documentation and code for the back-end can be found [here](https://github.com/SinghGunkar/food-app-API)
 
 ## Built with
 
@@ -13,13 +13,13 @@
 -   State management: redux/react-redux
 -   Authentication: jwt token & bcrypt
 -   Middlleware for backend security
-    -   helmet and xss (for xss prevention)
-    -   hpp (for http param pollution)
+    -   Helmet and Xss (for xss prevention)
+    -   Hpp (for http param pollution)
 -   Other
-    -   Custom hooks for api requests
-    -   Yelp api for search results
-    -   Ipgeolocation api for forward geolocation
-    -   Expo-location for for forward geolocation
+    -   Custom hooks for API requests
+    -   Yelp API for search results
+    -   Ipgeolocation API for forward geolocation
+    -   Expo-location API for forward geolocation
     -   Async storage for local jwt token storage
 
 ## Usage
@@ -29,8 +29,8 @@
 3.  Navigate to the location of the zip file, cd into zip file `cd /path/To/Zip/File`
 4.  Install dependencies `npm install`
 5.  Start application `expo start`
-6.  Expo will launch and show QR code in browser
-7.  Scan the QR code with your phone (you will need the expo go app installed)
+6.  Expo will launch and show a QR code in browser
+7.  Scan the QR code with your phone (you will need the [Expo Go](https://expo.dev/client) app installed)
 
 ## Features
 
@@ -39,7 +39,7 @@
 -   Delete existing favorites for a user
 -   Edit existing favorites for a user
 -   User favorites are automatically fetched on user login
--   Authenication persistence and auto-login
+-   Authentication persistence and auto-login
 -   Search for restaurants/businesses via geolocation and yelp's API
 -   Get nearby food places via expo-location and yelp's API
 -   Loading indicators for the search and nearby screen
@@ -77,42 +77,42 @@
 
 ## Key takeaway(s)
 
-Below are some lessons I learned during this project
+Below are some lessons I learned after completing this project
 
 <hr />
 
 ##### Problem: end point misconfiguration
 
-##### Lesson: exhaustively test all end points from client side during developing before deploying a backend to production
+##### Lesson: exhaustively test all end points from client side during developing before deploying a back-end to production
 
--   An end point was configured as `GET` when it should have been `POST`. However, I had already deployed my back end to production. As a result I could not request some user data from the database using the miconfigured endpoint. I used an alternative end point to fetch the data instead. This solved the problem but decreased code clarity.
+-   An end point was configured as `GET` when it should have been `POST`. However, I had already deployed my back end to production. As a result, I could not request some user data from the database using the misconfigured  endpoint. I used an alternative end point to fetch the data instead. This solved the problem, but decreased code clarity.
 <hr />
 
 ##### Problem: state management complexity
 
-##### Lesson: use redux and systematically plan the react componenet tree prior to development
+##### Lesson: use redux and systematically plan the react component tree prior to development
 
--   State and prop management (using react native) became complex as the componenet tree became more nested. I found myself having to pass props down through multiple componenets. Certain components did not have easy access to the required state variables. I was midway through development but had to scrap the entire project and restart using redux. The redux design pattern adds structure and forces a developer to code using the redux design pattern.
+-   State and prop management (using react native) became complex as the component tree became more nested. I found myself having to pass props down through multiple components. Certain components did not have easy access to the required state variables. I was midway through development, but had to scrap the entire project and restart using redux. The redux design pattern adds structure and forces a developer to code using the redux design pattern.
 <hr />
 
 ##### Problem: failing to track API status
 
 ##### Lesson: always track the status of an API request and provide UI feedback
 
--   Failing to track API status causes problems during development and gives a poor UI experience. When chaining API requests, I needed to know that the first API request had completed before I could submit the second request. For example, fetching a user's geolocation coordinates and then searching for restaruants based of those cooridnates becomes complex if API request statu(s) is not tracked. Redux's createSlice() function is a good tool for this.
+-   Failing to track API status causes problems during development and gives a poor UI experience. When chaining API requests, I needed to know that the first API request had completed before I could submit the second request. For example, fetching a user's geolocation coordinates and then searching for  restaurants based of those coordinates becomes complex if API request status(s) are not tracked. Redux's createSlice() function is a good tool for this.
 
 *   Once a user makes an API request, always show a loading indicator and disable the user's ability to make another request if a current request is in progress.
 <hr />
 
-##### Problem: seperation of concerns for react components and screens
+##### Problem: separation of concerns for react components and screens
 
-##### Lesson: componenets should primarily be responsible for rendering props, screens should primarily be responsible for perform side effects
+##### Lesson: components should primarily be responsible for rendering props, screens should primarily be responsible for perform side effects
 
--   To maximize componenet reusability, components should receive data and callbacks as props. Screen should perform side effects such as making API requests. If componenets contain logic from API requqest they become less reusable. This problem can be avoided by keeping logic for side effects outside of componenets.
+-   To maximize component reusability, components should receive data and callbacks as props. Screen should perform side effects such as making API requests. If components contain logic from API requests, they become less reusable. This problem can be avoided by keeping logic for side effects outside of components.
 <hr />
 
-##### Problem: FlatList componenet from "react-native-elements" performance
+##### Problem: FlatList component from "react-native-elements" performance
 
-##### Lesson: components from standard libary are not always optimized for performance, proceed with caution when using components from third party libararies
+##### Lesson: components from standard library are not always optimized for performance, proceed with caution when using components from third party libraries
 
--   FlatList has performance issues when rendering large lists. The following [link](https://reactnative.dev/docs/optimizing-flatlist-configuration) was helpful to mitigate the problem. Don't assume that code from thrid part libararies will be performant.
+-   FlatList has performance issues when rendering large lists. The following [link](https://reactnative.dev/docs/optimizing-flatlist-configuration) was helpful to mitigate the problem. Don't assume that code from thrid party libraries will be performant.
