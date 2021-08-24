@@ -1,6 +1,7 @@
 # Food Search App
 
 -   Documentation and code for the back-end can be found [here](https://github.com/SinghGunkar/food-app-API)
+-   iOS only
 
 ## Built with
 
