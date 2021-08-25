@@ -7,13 +7,13 @@
 
 -   React Native
 -   React
--   MongoDB (deployed using Digital Ocean free tier)
+-   MongoDB (deployed using Digital Ocean's free tier)
 -   Node
 -   Axios
 -   Express
 -   State management: redux/react-redux
 -   Authentication: jwt token & bcrypt
--   Middlleware for backend security
+-   Middleware for backend security
     -   Helmet and Xss (for xss prevention)
     -   Hpp (for http param pollution)
 -   Other
@@ -109,11 +109,11 @@ Below are some lessons I learned after completing this project
 
 ##### Lesson: components should primarily be responsible for rendering props, screens should primarily be responsible for perform side effects
 
--   To maximize component reusability, components should receive data and callbacks as props. Screen should perform side effects such as making API requests. If components contain logic from API requests, they become less reusable. This problem can be avoided by keeping logic for side effects outside of components.
+-   To maximize component reusability, components should receive data and callbacks as props. Screens should perform side effects such as making API requests. If components contain logic from API requests, they become less reusable. This problem can be avoided by keeping logic for side effects outside of components.
 <hr />
 
 ##### Problem: FlatList component from "react-native-elements" performance
 
 ##### Lesson: components from standard library are not always optimized for performance, proceed with caution when using components from third party libraries
 
--   FlatList has performance issues when rendering large lists. The following [link](https://reactnative.dev/docs/optimizing-flatlist-configuration) was helpful to mitigate the problem. Don't assume that code from thrid party libraries will be performant.
+-   FlatList has performance issues when rendering large lists. The following [link](https://reactnative.dev/docs/optimizing-flatlist-configuration) was helpful to mitigate the problem. Don't assume that code from third party libraries will be performant.
