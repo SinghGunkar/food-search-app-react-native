@@ -2,6 +2,7 @@
 
 -   Documentation and code for the back-end can be found [here](https://github.com/SinghGunkar/food-app-API)
 -   This app is for iOS only
+-   Scroll down for screenshots
 
 ## Built with
 
